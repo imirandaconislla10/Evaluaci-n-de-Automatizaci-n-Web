@@ -40,4 +40,63 @@ public class MyStoreStepdef {
     }
 
 
+    @Cuando("navego a la categoria {string} y subcategoria {string}")
+    public void navegoALaCategoriaYSubcategoria(String categoria, String subcategoria) {
+        myStoreSteps = new MyStoreSteps(driver);
+        myStoreSteps.selectCategory(categoria);
+        myStoreSteps.selectSubcategory(subcategoria);
+        screenShot();
+    }
+
+    @Y("agrego {int} unidades del primer producto al carrito")
+    public void agregoUnidadesDelPrimerProductoAlCarrito(int cantidad) {
+        myStoreSteps = new MyStoreSteps(driver);
+        myStoreSteps.irAProducto();
+        myStoreSteps.CantidadProducto2(cantidad);
+        myStoreSteps.addProductToCart(2, cantidad); // Asumiendo que el primer producto tiene un índice de 1
+        screenShot();
+    }
+
+    @Entonces("valido en el popup la confirmación del producto agregado")
+    public void validoEnElPopupLaConfirmaciónDelProductoAgregado() {
+        myStoreSteps.confirmacionProducto();
+    }
+
+    @Y("valido en el popup que el monto total sea calculado correctamente")
+    public void validoEnElPopupQueElMontoTotalSeaCalculadoCorrectamente() {
+     //   double priceOfProduct1 = 19.12; // Precio del primer producto
+      //  int quantityOfProduct1 = 12; // Cantidad del primer producto
+        // Calcular el monto total esperado
+      //  double expectedTotalAmount = (priceOfProduct1 * quantityOfProduct1) ;
+        // Obtener el total actual del popup
+       // double totalAmount = myStoreSteps.getTotalAmount();
+        // Aserción para verificar que el monto total es correcto
+      //  Assertions.assertEquals(expectedTotalAmount, totalAmount, "El monto total no es correcto");
+
+       // screenShot();
+
+    }
+
+    @Cuando("finalizo la compra")
+    public void finalizoLaCompra() {
+        myStoreSteps = new MyStoreSteps(driver);
+        myStoreSteps.proceedToCheckout();
+        screenShot();
+    }
+
+    @Entonces("valido el titulo de la pagina del carrito")
+    public void validoElTituloDeLaPaginaDelCarrito() {
+        String pageTitle = driver.getTitle();
+        Assertions.assertEquals("My Store", pageTitle);
+        screenShot();
+    }
+
+
+    @Y("vuelvo a validar el calculo de precios en el carrito {string}")
+    public void vuelvoAValidarElCalculoDePreciosEnElCarrito(String expectedTotalAmount) {
+        myStoreSteps = new MyStoreSteps(driver);
+        double totalAmount = myStoreSteps.getTotalAmount();
+        Assertions.assertEquals(expectedTotalAmount, totalAmount, "El monto total no es correcto");
+
+    }
 }

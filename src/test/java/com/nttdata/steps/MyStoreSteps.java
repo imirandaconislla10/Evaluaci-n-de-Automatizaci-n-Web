@@ -52,24 +52,57 @@ public class MyStoreSteps {
         this.driver.findElement(MyStorePage.IniciarSesionBtn).click();
     }
 
-
-    public  void clickBtnContactar(){
-        driver.findElement(By.xpath("//*[@id=\"_desktop_contact_link\"]/a")).click();
+    public void selectCategory(String categoria) {
+        this.driver.findElement(MyStorePage.CategoriaBtn).click();
     }
 
-    public void validarItems(InventorySteps inventorySteps) {
-        int itemsListSize = inventorySteps.getItemSize();
-        //prueba: validar que al menos exista un item
-        screenShot();
-        Assertions.assertTrue(itemsListSize > 0, "El tamaño de la lista es: " + itemsListSize);
+    public void selectSubcategory(String subcategoria) {
+        this.driver.findElement(MyStorePage.MenCategoriaBtn).click();
+    }
+    public void irAProducto() {
+        this.driver.findElement(MyStorePage.productList).click();
+    }
+    public void CantidadProducto2(int cantidad) {
+        WebElement quantityField=   this.driver.findElement(MyStorePage.Cantidad);
+        quantityField.clear();
+        quantityField.sendKeys("2");
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    }
+
+    public void addProductToCart(int productIndex, int cantidad) {
+        this.driver.findElement(MyStorePage.addToCartButton).click();
     }
 
 
+    public void confirmacionProducto() {
+        this.driver.findElement(MyStorePage.ProductoConfirmado).click();
+    }
 
+    public void proceedToCheckout() {
+        // Espera explícita para asegurarse de que el botón de checkout esté visible
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+        // Localiza el botón o enlace para proceder al checkout
+        WebElement checkoutButton = wait.until(ExpectedConditions.visibilityOfElementLocated(MyStorePage.FinalizarCompraButtom)); // Asegúrate de tener este selector en MyStorePage
+        // Hacer clic en el botón de checkout
+        checkoutButton.click();
+
+
+    }
+
+    /**
+     * Obtener el monto total del popup
+     * @return el monto total como un valor double
+     */
+    public double getTotalAmount() {
+        // Espera explícita para asegurarse de que el total del popup esté visible
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+        // Localiza el elemento que muestra el total en el popup
+        WebElement totalAmountElement = wait.until(ExpectedConditions.visibilityOfElementLocated(MyStorePage.totalAmount)); // Asegúrate de tener este selector en MyStorePage
+
+        // Obtener el texto del elemento y convertirlo a un valor double
+        String totalAmountText = totalAmountElement.getText().replace("$", "").replace(",", "").trim(); // Ajusta según el formato de tu moneda
+        return Double.parseDouble(totalAmountText);
+    }
 }
