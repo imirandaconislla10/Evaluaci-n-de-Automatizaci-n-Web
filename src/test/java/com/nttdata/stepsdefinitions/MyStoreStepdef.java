@@ -64,14 +64,14 @@ public class MyStoreStepdef {
 
     @Y("valido en el popup que el monto total sea calculado correctamente")
     public void validoEnElPopupQueElMontoTotalSeaCalculadoCorrectamente() {
-     //   double priceOfProduct1 = 19.12; // Precio del primer producto
-      //  int quantityOfProduct1 = 12; // Cantidad del primer producto
-        // Calcular el monto total esperado
-      //  double expectedTotalAmount = (priceOfProduct1 * quantityOfProduct1) ;
+       double priceOfProduct1 = 19.12; // Precio del primer producto
+        int quantityOfProduct1 = 12; // Cantidad del primer producto
+         //Calcular el monto total esperado
+       double expectedTotalAmount = (priceOfProduct1 * quantityOfProduct1) ;
         // Obtener el total actual del popup
-       // double totalAmount = myStoreSteps.getTotalAmount();
-        // Aserción para verificar que el monto total es correcto
-      //  Assertions.assertEquals(expectedTotalAmount, totalAmount, "El monto total no es correcto");
+       double totalAmount = myStoreSteps.getTotalAmount();
+       //  Aserción para verificar que el monto total es correcto
+    Assertions.assertEquals(expectedTotalAmount, totalAmount, "El monto total no es correcto");
 
        // screenShot();
 
@@ -96,7 +96,7 @@ public class MyStoreStepdef {
     public void vuelvoAValidarElCalculoDePreciosEnElCarrito(String expectedTotalAmount) {
         myStoreSteps = new MyStoreSteps(driver);
         double totalAmount = myStoreSteps.getTotalAmount();
-        Assertions.assertEquals(expectedTotalAmount, totalAmount, "El monto total no es correcto");
+       Assertions.assertEquals("S/ 229.44", totalAmount, "El monto total ");
 
     }
 }
